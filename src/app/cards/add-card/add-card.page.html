@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Your Card</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-card>
+          <ion-card-content>
+            <form [formGroup]="addCardForm" (ngSubmit)="addCard()">
+              <ion-item>
+                <ion-label position="floating">Card Number</ion-label>
+                <ion-input inputmode="numeric" formControlName="cardNumber" type="number" autofocus="true"></ion-input>
+              </ion-item>
+              <ion-text color="danger"  *ngIf="addCardForm.get('cardNumber').invalid && addCardForm.get('cardNumber').dirty">
+                  {{getValidationError('cardNumber', addCardForm, cardValidations)}}
+              </ion-text>
+              <ion-item>
+                <ion-label position="floating">Card Holder Name</ion-label>
+                <ion-input formControlName="holderName"></ion-input>
+              </ion-item>
+              <ion-text color="danger"  *ngIf="addCardForm.get('holderName').invalid && addCardForm.get('holderName').dirty">
+                  {{getValidationError('holderName', addCardForm, cardValidations)}}
+              </ion-text>
+              <ion-item>
+                <ion-label position="floating">Expiry Date (MMYY)</ion-label>
+                <ion-input inputmode="numeric" formControlName="expiryDate" type="text"></ion-input>
+              </ion-item>
+              <ion-text color="danger"  *ngIf="addCardForm.get('expiryDate').invalid && addCardForm.get('expiryDate').dirty">
+                  {{getValidationError('expiryDate', addCardForm, cardValidations)}}
+              </ion-text>
+              <ion-item>
+                <ion-label position="floating">CVV (123/1234)</ion-label>
+                <ion-input inputmode="numeric" formControlName="cvv" type="password"></ion-input>
+              </ion-item>
+              <ion-text color="danger"  *ngIf="addCardForm.get('cvv').invalid && addCardForm.get('cvv').dirty">
+                  {{getValidationError('cvv', addCardForm, cardValidations)}}
+              </ion-text>
+              <ion-item>
+                <ion-label position="floating">Card Nick Name</ion-label>
+                <ion-input formControlName="cardNickName"></ion-input>
+              </ion-item>
+              <div float-right padding-vertical>
+                <ion-button color="secondary" (click)="addCardForm.reset()" fill="outline">
+                    <ion-icon name="close" slot="start" size="large"></ion-icon>Clear
+                </ion-button>
+                <ion-button color="secondary" type="submit">
+                    <ion-icon slot="start" name="add-circle" size="large"></ion-icon>Add
+                </ion-button>
+              </div>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

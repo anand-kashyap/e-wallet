@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>Card Holder</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col size-md="6" offset-md="3">
+        <ion-card>
+          <ion-card-header color="secondary">
+            <ion-card-title padding-start>Saved Cards</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label color="danger">{{authErr}}</ion-label>
+            <ion-list lines="none" *ngIf="!savedCards || savedCards.length === 0">
+              <ion-item [routerLink]="['./add']">
+                <ion-label>Add a new Card</ion-label>
+                <ion-icon size="large" name="add-circle"></ion-icon>
+              </ion-item>
+            </ion-list>
+            <ion-list *ngIf="savedCards">
+              <ion-item *ngFor="let card of savedCards" [routerLink]="['./getCard/', card.cardId]"> 
+                <ion-label>
+                  <strong color="dark">{{card.cardNickName}}</strong>
+                </ion-label>
+                <ion-label>
+                    <span>{{card.cardNumber}}</span>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab vertical="center" horizontal="end" slot="fixed" [routerLink]="['./add']">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

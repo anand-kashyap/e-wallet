@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="loadedCard">{{loadedCard.cardNickName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid no-padding *ngIf="loadedCard">
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item>{{loadedCard.holderName}}
+            <ion-button fill="clear" slot="end" (click)="copyText(loadedCard.holderName)">
+              <ion-icon name="copy" size="large"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item>{{loadedCard.cardNumber}}
+            <ion-button fill="clear" slot="end" (click)="copyText(loadedCard.cardNumber)">
+              <ion-icon name="copy" size="large"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item>{{loadedCard.expiryDate}}
+            <ion-button fill="clear" slot="end" (click)="copyText(loadedCard.expiryDate)">
+              <ion-icon name="copy" size="large"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
