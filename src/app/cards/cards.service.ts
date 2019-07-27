@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Card } from './card.models';
 import { ToastController } from '@ionic/angular';
 import { Subject } from 'rxjs';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
+// import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Storage } from '@ionic/storage';
 // import { Plugins } from '@capacitor/core';
 // import * as CapacitorSQLPlugin from 'capacitor-data-storage-sqlite';
 
@@ -15,8 +16,43 @@ export class CardsService {
 
   savedCardsLive = new Subject<Card[]>();
 
-  constructor(private toastController: ToastController, private nativeStorage: NativeStorage) {
+  constructor(private toastController: ToastController, public storage: Storage) {
    }
+
+  public setItem(settingName: string, value) {
+    return this.storage.set(`setting:${ settingName }`, value);
+  }
+
+  public async getItem(settingName: string) {
+    return await this.storage.get(`setting:${ settingName }`);
+  }
+
+  public async removeItem(settingName: string) {
+    return await this.storage.remove(`setting:${ settingName }`);
+  }
+
+  public clear() {
+    this.storage.clear().then(() => {
+      console.log('all keys cleared');
+    });
+  }
+
+  getFromStorage(key: string, json = false) {
+    return this.getItem(key)
+    .then(
+      data => {
+        // console.log(data);
+        if (json && data != null) {
+          data = JSON.parse(data);
+        }
+        return data;
+      },
+      error => {
+        console.log(error);
+        throw new Error(error);
+      }
+    );
+  }
 
   getSavedCards(): Promise<Card[]> {
     return this.getFromStorage('cards', true).then(cards => {
@@ -89,7 +125,7 @@ export class CardsService {
   }
 
   getStorageVal(key: string) {
-    return this.nativeStorage.getItem(key)
+    return this.getItem(key)
     .then(
       data => {
         console.log(data);
@@ -118,25 +154,10 @@ export class CardsService {
       json = value;
       value = JSON.stringify(value);
     }
-    await this.nativeStorage.setItem(key, value);
+    await this.setItem(key, value);
     return json;
   }
 
-  getFromStorage(key: string, json = false) {
-    return this.nativeStorage.getItem(key)
-    .then(
-      data => {
-        console.log(data);
-        if (json && data !== null) {
-          JSON.parse(data);
-        }
-        return data;
-      },
-      error => {
-        console.log(error);
-        throw new Error(error);
-      }
-    );
     /* const storage = await this.getStorage();
     const result = await storage.get({key});
     // console.log('result ', result);
@@ -144,6 +165,6 @@ export class CardsService {
       return JSON.parse(result.value);
     }
     return result.value; */
-  }
+
 
 }
