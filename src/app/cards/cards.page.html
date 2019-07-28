@@ -41,3 +41,50 @@
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+<ion-content>
+    <ion-toolbar color="success">
+        <ion-title>saved cards</ion-title>
+    </ion-toolbar>
+<ion-grid>
+  <ion-row>
+    <ion-col size-md="4" size-sm="4" size-xs="12">
+      <div>
+        <ion-card class="red-color" *ngIf="savedCards">
+            <ion-card-content *ngFor="let card of savedCards" [routerLink]="['./getCard/', card.cardId]">
+                <ion-card-content>
+                    <ion-label>card name</ion-label>
+                      <h3 color="dark">{{card.cardNickName}}</h3>
+                </ion-card-content>
+                <ion-card-content>
+                    <ion-label>card number</ion-label>
+                  <h3>{{card.cardNumber}}</h3>
+                </ion-card-content>
+                <ion-card-content>
+                    <ion-label>Expiry Date</ion-label>
+                  <h3>{{card.expiryDate}}</h3>
+                </ion-card-content>
+            </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-col>
+    <ion-col size-md="4" size-sm="4" size-xs="12">
+      <div>
+        <ion-card class="black-color">
+            <ion-card-content><ion-label>card name</ion-label></ion-card-content>
+            <ion-card-content><ion-label>card name</ion-label></ion-card-content>
+            <ion-card-content><ion-label>card name</ion-label></ion-card-content>
+        </ion-card>
+      </div>
+    </ion-col>
+    <ion-col size-md="4" size-sm="4" size-xs="12">
+      <div>
+        <ion-card class="card-color">
+            <ion-card-content><ion-label>card name</ion-label></ion-card-content>
+            <ion-card-content><ion-label>card name</ion-label></ion-card-content>
+            <ion-card-content><ion-label>card name</ion-label></ion-card-content>
+        </ion-card>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>
